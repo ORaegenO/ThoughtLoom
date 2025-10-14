@@ -1,4 +1,4 @@
-# ProjectHub - Hierarchical Project Management App
+# ThoughtLoom - Hierarchical Project Management App
 
 A web application for organizing multiple projects with nested categories and notes.
 
