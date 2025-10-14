@@ -50,7 +50,8 @@ app.use(passport.session());
 
 // Routes
 app.use('/', require('./routes/auth'));
-app.use('/projects', require('./routes/projects')); 
+app.use('/projects', require('./routes/projects'));
+app.use('/categories', require('./routes/categories'));  // ADD THIS LINE
 app.use('/notes', require('./routes/notes'));
 app.use('/api', require('./routes/api'));
 

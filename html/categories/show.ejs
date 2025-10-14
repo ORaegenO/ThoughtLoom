@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= category.name %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <small class="text-muted">Project: <%= category.project.name %></small>
+                <h1 style="border-left: 4px solid '<%= category.color %>'; padding-left: 12px;"><%= category.name %></h1>
+            </div>
+            <a href="/projects/<%= category.project._id %>" class="btn btn-outline-secondary">Back to Project</a>
+        </div>
+        
+        <p class="text-muted"><%= category.description || 'No description' %></p>
+        
+        <hr>
+        
+        <h3>Notes</h3>
+        <p class="text-muted">Notes coming soon! We'll add them in the next step.</p>
+        
+        <a href="/notes/new?category=<%= category._id %>" class="btn btn-primary">+ New Note</a>
+    </div>
+</body>
+</html>

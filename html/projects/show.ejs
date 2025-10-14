@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 style="border-left: 4px solid '<%= project.color || '#000' %>'; padding-left: 12px;"><%= project.name %></h1>
+            <h1 style="border-left: 4px solid '<%= project.color || '#000000' %>'; padding-left: 12px;"><%= project.name %></h1>
             <a href="/projects" class="btn btn-outline-secondary">Back to Projects</a>
         </div>
         
@@ -18,9 +18,31 @@
         <hr>
         
         <h3>Categories</h3>
-        <p class="text-muted">Categories coming soon! We'll add them in the next step.</p>
         
-        <a href="/categories/new?project=<%= project._id %>" class="btn btn-primary">+ New Category</a>
+        <% if (categories && categories.length > 0) { %>
+            <div class="row">
+                <% categories.forEach(category => { %>
+                    <div class="col-md-4 mb-3">
+                        <div class="card" style="border-left: 4px solid '<%= category.color || '#000000' %>';">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= category.name %></h5>
+                                <p class="card-text text-muted"><%= category.description || 'No description' %></p>
+                                <div class="d-flex gap-2">
+                                    <a href="/categories/<%= category._id %>" class="btn btn-sm btn-primary">View</a>
+                                    <form action="/categories/<%= category._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this category?')">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p class="text-muted">No categories yet. Create one to get started!</p>
+        <% } %>
+        
+        <a href="/categories/new?project=<%= project._id %>" class="btn btn-primary mt-3">+ New Category</a>
     </div>
 </body>
 </html>

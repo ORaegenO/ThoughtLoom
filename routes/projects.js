@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Project = require('../models/Project');
+const Category = require('../models/Category');  // ADD THIS LINE
 const { isLoggedIn } = require('../middleware/auth');
 
 // Get all projects for current user
@@ -42,12 +43,16 @@ router.get('/:id', isLoggedIn, async (req, res) => {
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
-        res.render('projects/show', { project, user: req.user });
+        
+        // Fetch categories for this project
+        const Category = require('../models/Category');
+        const categories = await Category.find({ project: project._id, user: req.user.id });
+        
+        res.render('projects/show', { project, categories, user: req.user });
     } catch (err) {
         res.status(500).json({ message: 'Error fetching project' });
     }
 });
-
 // Delete project
 router.delete('/:id', isLoggedIn, async (req, res) => {
     try {
