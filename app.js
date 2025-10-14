@@ -28,44 +28,6 @@ mongoose.connect(process.env.MONGODB_URI, {
     process.exit(1);
   });
 
-// // MongoDB connect
-// mongoose.connect(process.env.MONGODB_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   dbName: 'midterm'
-// })
-//  const PORT = process.env.PORT || 3001;
-//  .then(() =>console.log('MongoDB connected'))
-
-//  app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-//   console.log(`Visit http://localhost:${PORT} to see the app`);
-// })
-
-// .catch(err => console.error('err'));
-
-
-
-
-
-
-/*const Note = require('./models/Note');
-app.post('/notes', async (req, res) => {
-  try{
-    const note = new Note(req.body);
-    const savedNote = await note.save();
-    res.status(201).json(savedNote);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-*/
-
-// //optional test route
-// app.get('/', (req, res) => {
-//   res.send('Notes are working');
-// });
-
 app.set('view engine', 'ejs');
 // if you delete this line, it will default to 'views' folder
 app.set('views', path.join(__dirname, 'html')); 
@@ -88,10 +50,11 @@ app.use(passport.session());
 
 // Routes
 app.use('/', require('./routes/auth'));
+app.use('/projects', require('./routes/projects')); 
 app.use('/notes', require('./routes/notes'));
 app.use('/api', require('./routes/api'));
 
-// Add this route to your app.js (not in the routes folder)
+
 app.get('/test-server', (req, res) => {
   res.json({ message: 'Server is working!', timestamp: new Date() });
 });

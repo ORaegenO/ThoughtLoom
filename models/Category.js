@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 
-const noteSchema = new mongoose.Schema({
-    title: {
+const categorySchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true
     },
-    content: String,
-    category: {
+    description: String,
+    color: {
+        type: String,
+        default: '#10B981' // Default green color
+    },
+    project: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
+        ref: 'Project',
         required: true
     },
     user: {
@@ -21,5 +25,5 @@ const noteSchema = new mongoose.Schema({
     }
 });
 
-const Note = mongoose.model('Note', noteSchema);
-module.exports = Note;
+const Category = mongoose.model('Category', categorySchema);
+module.exports = Category;
