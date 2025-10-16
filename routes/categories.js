@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category');
 const Project = require('../models/Project');
+const Note = require('../models/Note'); 
 const { isLoggedIn } = require('../middleware/auth');
 
 // Show form to create new category
@@ -44,7 +45,12 @@ router.get('/:id', isLoggedIn, async (req, res) => {
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
         }
-        res.render('categories/show', { category, user: req.user });
+        
+        // Fetch notes for this category
+        const Note = require('../models/Note');
+        const notes = await Note.find({ category: category._id, user: req.user.id }).sort({ createdAt: -1 });
+        
+        res.render('categories/show', { category, notes, user: req.user });
     } catch (err) {
         res.status(500).json({ message: 'Error fetching category' });
     }

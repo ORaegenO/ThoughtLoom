@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <small class="text-muted">Project: <%= category.project.name %></small>
-                <h1 style="border-left: 4px solid '<%= category.color %>'; padding-left: 12px;"><%= category.name %></h1>
+                <h1 style="border-left: 4px solid '<%= category.color || '#000000' %>'; padding-left: 12px;"><%= category.name %></h1>
             </div>
             <a href="/projects/<%= category.project._id %>" class="btn btn-outline-secondary">Back to Project</a>
         </div>
@@ -21,7 +21,22 @@
         <hr>
         
         <h3>Notes</h3>
-        <p class="text-muted">Notes coming soon! We'll add them in the next step.</p>
+        
+        <% if (notes && notes.length > 0) { %>
+            <div class="list-group mb-3">
+                <% notes.forEach(note => { %>
+                    <a href="/notes/<%= note._id %>" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><%= note.title %></h5>
+                            <small><%= note.createdAt.toLocaleDateString() %></small>
+                        </div>
+                        <p class="mb-1 text-muted"><%= note.content ? note.content.substring(0, 100) + '...' : 'No content' %></p>
+                    </a>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p class="text-muted">No notes yet. Create one to get started!</p>
+        <% } %>
         
         <a href="/notes/new?category=<%= category._id %>" class="btn btn-primary">+ New Note</a>
     </div>
