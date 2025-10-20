@@ -6,6 +6,10 @@ const noteSchema = new mongoose.Schema({
         required: true
     },
     content: String,
+    completed: {
+        type: Boolean,
+        default: false
+    },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
@@ -18,6 +22,10 @@ const noteSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    completedAt: {
+        type: Date,
+        default: null
     }
 });
 

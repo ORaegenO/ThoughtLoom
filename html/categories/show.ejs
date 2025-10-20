@@ -21,17 +21,37 @@
         <hr>
         
         <h3>Notes</h3>
-        
+
         <% if (notes && notes.length > 0) { %>
             <div class="list-group mb-3">
                 <% notes.forEach(note => { %>
-                    <a href="/notes/<%= note._id %>" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1"><%= note.title %></h5>
-                            <small><%= note.createdAt.toLocaleDateString() %></small>
+                    <div class="list-group-item">
+                        <div class="d-flex align-items-start">
+                            <form action="/notes/<%= note._id %>/toggle" method="POST" class="me-3">
+                                <input type="checkbox" 
+                                       class="form-check-input" 
+                                       style="width: 20px; height: 20px; cursor: pointer;"
+                                       <%= note.completed ? 'checked' : '' %>
+                                       onchange="this.form.submit()">
+                            </form>
+                            <div class="flex-grow-1">
+                                <a href="/notes/<%= note._id %>" class="text-decoration-none">
+                                    <h5 class="mb-1 <%= note.completed ? 'text-decoration-line-through text-muted' : '' %>">
+                                        <%= note.title %>
+                                    </h5>
+                                </a>
+                                <p class="mb-1 text-muted <%= note.completed ? 'text-decoration-line-through' : '' %>">
+                                    <%= note.content ? note.content.substring(0, 100) + '...' : 'No content' %>
+                                </p>
+                                <small class="text-muted">
+                                    Created: <%= note.createdAt.toLocaleDateString() %>
+                                    <% if (note.completed && note.completedAt) { %>
+                                        | Completed: <%= note.completedAt.toLocaleDateString() %>
+                                    <% } %>
+                                </small>
+                            </div>
                         </div>
-                        <p class="mb-1 text-muted"><%= note.content ? note.content.substring(0, 100) + '...' : 'No content' %></p>
-                    </a>
+                    </div>
                 <% }) %>
             </div>
         <% } else { %>
@@ -39,6 +59,5 @@
         <% } %>
         
         <a href="/notes/new?category=<%= category._id %>" class="btn btn-primary">+ New Note</a>
-    </div>
 </body>
 </html>

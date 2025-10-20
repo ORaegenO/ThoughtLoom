@@ -101,4 +101,22 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
     }
 });
 
+// Toggle note completion
+router.post('/:id/toggle', isLoggedIn, async (req, res) => {
+  try {
+      const note = await Note.findOne({ _id: req.params.id, user: req.user.id });
+      if (!note) {
+          return res.status(404).json({ message: 'Note not found' });
+      }
+      
+      note.completed = !note.completed;
+      note.completedAt = note.completed ? new Date() : null;
+      await note.save();
+      
+      res.redirect('/categories/' + note.category);
+  } catch (err) {
+      res.status(500).json({ message: 'Error updating note' });
+  }
+});
+
 module.exports = router;
