@@ -67,4 +67,36 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
     }
 });
 
+// Show edit form for project
+router.get('/:id/edit', isLoggedIn, async (req, res) => {
+    try {
+        const project = await Project.findOne({ _id: req.params.id, user: req.user.id });
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+        res.render('projects/edit', { project, user: req.user });
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching project' });
+    }
+});
+
+// Update project
+router.put('/:id', isLoggedIn, async (req, res) => {
+    try {
+        const { name, description, color } = req.body;
+        const updatedProject = await Project.findOneAndUpdate(
+            { _id: req.params.id, user: req.user.id },
+            { name, description, color },
+            { new: true }
+        );
+        if (updatedProject) {
+            res.redirect('/projects/' + updatedProject._id);
+        } else {
+            res.status(404).json({ message: 'Project not found' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating project' });
+    }
+});
+
 module.exports = router;

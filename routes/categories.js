@@ -71,4 +71,37 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
     }
 });
 
+// Show edit form for category
+router.get('/:id/edit', isLoggedIn, async (req, res) => {
+    try {
+        const category = await Category.findOne({ _id: req.params.id, user: req.user.id })
+            .populate('project');
+        if (!category) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+        res.render('categories/edit', { category, user: req.user });
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching category' });
+    }
+});
+
+// Update category
+router.put('/:id', isLoggedIn, async (req, res) => {
+    try {
+        const { name, description, color } = req.body;
+        const updatedCategory = await Category.findOneAndUpdate(
+            { _id: req.params.id, user: req.user.id },
+            { name, description, color },
+            { new: true }
+        );
+        if (updatedCategory) {
+            res.redirect('/categories/' + updatedCategory._id);
+        } else {
+            res.status(404).json({ message: 'Category not found' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating category' });
+    }
+});
+
 module.exports = router;
