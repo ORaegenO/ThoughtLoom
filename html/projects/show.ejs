@@ -30,6 +30,7 @@
                             <div class="card-body">
                                 <h5 class="card-title"><%= category.name %></h5>
                                 <p class="card-text text-muted"><%= category.description || 'No description' %></p>
+                                <small class="text-muted d-block mb-2">Created: <%= category.createdAt.toLocaleDateString() %></small>
                                 <div class="d-flex gap-2">
                                     <a href="/categories/<%= category._id %>" class="btn btn-sm btn-primary">View</a>
                                     <form action="/categories/<%= category._id %>?_method=DELETE" method="POST" style="display: inline;">
