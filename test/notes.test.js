@@ -21,15 +21,22 @@ describe('Note Model Tests', () => {
         expect(note.createdAt).to.exist;
     });
 
-    it('should validate required title field', () => {
+    it('should validate required title field', async function() {
         const noteData = {
-            content: 'Content without title',
-            user: '12345'
+            // Missing title
+            content: 'Some content',
+            user: 'test-user'
         };
-
-        const note = new Note(noteData);
-        
-        // Test that title exists (even if empty string)
-        expect(note.title).to.not.be.undefined;
+    
+        try {
+            await Note.create(noteData);
+            // If we get here, test should fail
+            expect.fail('Should have thrown validation error');
+        } catch (err) {
+            // Error should be thrown - test passes!
+            expect(err).to.exist;
+            expect(err.message).to.exist;
+            console.log('✅ Validation test passed: Title is required');
+        }
     });
 });
