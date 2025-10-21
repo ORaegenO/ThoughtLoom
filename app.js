@@ -51,8 +51,9 @@ app.use(passport.session());
 // Routes
 app.use('/', require('./routes/auth'));
 app.use('/projects', require('./routes/projects'));
-app.use('/categories', require('./routes/categories'));  // ADD THIS LINE
+app.use('/categories', require('./routes/categories'));
 app.use('/notes', require('./routes/notes'));
+app.use('/quick-notes', require('./routes/quickNotes'));  // ADD THIS LINE
 app.use('/api', require('./routes/api'));
 
 
@@ -75,6 +76,7 @@ app.get('/', (req, res) => {
 app.get('/dashboard', isLoggedIn, (req, res) => {
   res.render('dashboard', { user: req.user });
 });
+
 
 
 
