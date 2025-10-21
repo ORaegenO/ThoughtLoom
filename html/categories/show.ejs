@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <small class="text-muted">Project: <%= category.project.name %></small>
-                <h1 style="border-left: 4px solid '<%= category.color || '#000000' %>'; padding-left: 12px;"><%= category.name %></h1>
+                <h1 style="border-left: 4px solid <%= category.color || '#000000' %>; padding-left: 12px;"><%= category.name %></h1>
             </div>
             <div>
                 <a href="/categories/<%= category._id %>/edit" class="btn btn-warning">Edit</a>

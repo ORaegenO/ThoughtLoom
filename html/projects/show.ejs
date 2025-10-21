@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 style="border-left: 4px solid '<%= project.color || '#000000' %>'; padding-left: 12px;"><%= project.name %></h1>
+            <h1 style="border-left: 4px solid '<%= project.color || '#3B82F6' %>'; padding-left: 12px;"><%= project.name %></h1>
             <div>
                 <a href="/projects/<%= project._id %>/edit" class="btn btn-warning">Edit</a>
                 <a href="/projects" class="btn btn-outline-secondary">Back to Projects</a>
@@ -26,7 +26,7 @@
             <div class="row">
                 <% categories.forEach(category => { %>
                     <div class="col-md-4 mb-3">
-                        <div class="card" style="border-left: 4px solid '<%= category.color || '#000000' %>';">
+                        <div class="card" style="border-left: 4px solid <%= category.color || '#10B981' %>;">
                             <div class="card-body">
                                 <h5 class="card-title"><%= category.name %></h5>
                                 <p class="card-text text-muted"><%= category.description || 'No description' %></p>

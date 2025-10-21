@@ -26,7 +26,7 @@
             <% } else { %>
                 <% projects.forEach(project => { %>
                     <div class="col-md-4 mb-4">
-                        <div class="card" style="border-left: 4px solid '<%= project.color || '#000000' %>';">
+                        <div class="card" style="border-left: 4px solid <%= project.color || '#3B82F6' %>;">
                             <div class="card-body">
                                 <h5 class="card-title"><%= project.name %></h5>
                                 <p class="card-text text-muted"><%= project.description || 'No description' %></p>
